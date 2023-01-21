@@ -1,4 +1,4 @@
-package ing;
+package done;
 
 public class 평균구하기 {
 
