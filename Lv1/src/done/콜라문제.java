@@ -21,7 +21,7 @@ class Cola {
         while (n >= a) {
         	System.out.print("빈 병 " + n + "개 중에 " + n/a*a + "개를 가져가서 ");
         	System.out.println(n/a + "병의 콜라를 받습니다.");
-        	answer += n / a;
+        	answer += n / a*b;
         	n = n/a*b + n%a;
         }
         
