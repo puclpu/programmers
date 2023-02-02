@@ -1,4 +1,4 @@
-package ing;
+package done;
 
 public class 실패율 {
 
