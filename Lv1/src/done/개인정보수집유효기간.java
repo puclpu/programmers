@@ -1,13 +1,13 @@
-package ing;
+package done;
 
 import java.util.ArrayList;
 
 public class 개인정보수집유효기간 {
 
 	public static void main(String[] args) {
-		String today = "2022.05.19";
-		String[] terms = {"A 6", "B 12", "C 3"};
-		String[] privacies = {"2021.05.02 A", "2021.07.01 B", "2022.02.19 C", "2022.02.20 C"};
+		String today = "2021.12.08";
+		String[] terms = {"A 18"};
+		String[] privacies = {"2020.06.08 A"};
 		PrivacyCollectionValidityPeriod pcvp = new PrivacyCollectionValidityPeriod();
 		int[] result = pcvp.solution(today, terms, privacies);
 		for (int i : result) {
@@ -32,13 +32,14 @@ class PrivacyCollectionValidityPeriod {
         
         for (int i = 0; i < privacies.length; i++) {
         	// pdate_ptrem[0] = 수집된 날짜, pdate_pterm[1] = 약관 종류
-			String[] pdate_pterm = privacies[i].split(" "); 
+			String[] pdate_pterm = privacies[i].split(" ");
 			
 			for (int j = 0; j < terms.length; j++) {
 				if (pdate_pterm[1].equals(t_term[j])) { // 수집된 개인정보의 약관 종류를 terms에서 찾기
 					int[] ddate = destroy_date(pdate_pterm[0], t_month[j]); // 파기해야 할 날짜
+					
 					if (check_destory(ddate, today_ymd)) { // 파기해야 할 개인정보라면
-						list.add(i);
+						list.add(i + 1);
 					}
 				}
 			}
@@ -51,13 +52,19 @@ class PrivacyCollectionValidityPeriod {
         
         return answer;
     }
-    private boolean check_destory(int[] date, String[] today) {
+    private boolean check_destory(int[] date, String[] today) { // 파기해야할 날짜, 오늘 날짜
     	int ty = Integer.parseInt(today[0]);
     	int tm = Integer.parseInt(today[1]);
     	int td = Integer.parseInt(today[2]);
     	
-    	if (date[0] < ty && date[1] < tm && date[2] < td) {
+    	if (date[0] < ty) {
     		return true;
+    	} else if (date[0] == ty) {
+    		if (date[1] < tm) {
+    			return true;
+    		} else if (date[1] == tm && date[2] < td) {
+    			return true;
+    		}
     	}
     	
     	
@@ -72,10 +79,23 @@ class PrivacyCollectionValidityPeriod {
     	int mm = Integer.parseInt(str[1]);
     	int dd = Integer.parseInt(str[2]);
     	
-    	mm += month;
+    	dd += (month * 28) - 1;
+    	if (dd > 28) {
+    		mm += (dd / 28);
+    		dd = dd % 28;
+    	}
+    	if (dd == 0) {
+    		dd = 28;
+    		mm--;
+    	}
+    	
     	if (mm > 12) {
     		yy += (mm / 12);
     		mm = mm % 12;
+    	}
+    	if (mm == 0) {
+    		mm = 12;
+    		yy--;
     	}
     	
     	d_date[0] = yy;
