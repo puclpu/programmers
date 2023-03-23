@@ -21,48 +21,76 @@ class NoMoreThanTwoDifferentBits {
         
         for (int i = 0; i < numbers.length; i++) {
 			long num = numbers[i];
-			String num_bin = num_to_bin(num); // 2진수로 변환
-			boolean find = false; // f을 값을 찾을 때까지
-			long target = num ;
-			while(!find) { // 반복문 돌림
-				target++;
-				String tar_bin = num_to_bin(target);
-				find = find_different_bits(num_bin, tar_bin);
+			if (num % 2 == 0) { // 짝수일 경우
+				answer[i] = num + 1;
+			} else { // 홀수일 경우
+				String num_bit = num_to_bit(num);
+				boolean onlyone = true;
+				int j;
+				for (j = num_bit.length()-1; j >= 0; j--) {
+					if (num_bit.charAt(j) != '1') {
+						onlyone = false;
+						break;
+					}
+				}
+				
+				if (onlyone) { // num_bit가 1로만 이루어진 홀수
+					String bits = "10" + num_bit.substring(1, num_bit.length());
+					answer[i] = bit_to_num(bits);
+				} else { // 0과 1이 섞인 홀수
+					StringBuilder sb = new StringBuilder(num_bit);
+					sb.setCharAt(j, '1');
+					sb.setCharAt(num_bit.length()-1, '0');
+					answer[i] = bit_to_num(sb.toString());
+				}
 			}
-			answer[i] = target;
 		}
         
         return answer;
     }
-    private boolean find_different_bits(String num, String tar) { // 다른 비트 수가 2개 이하인지 판별
+    private long bit_to_num(String bits) {
+    	long num = 0;
+    	long mul = 1;
     	
-    	if (tar.length() > num.length()) {
-    		for (int i = 0; i < tar.length() - num.length(); i++) {
-				num = "0" + num;
-			}
-    	}
-    	
-    	int dif_bits = 0;
-    	
-    	for (int i = 0; i < tar.length(); i++) {
-			if (tar.charAt(i) != num.charAt(i))
-				dif_bits++;
-			
-			if (dif_bits > 2)
-				return false;
+    	for (int i = bits.length()-1; i >= 0; i--) {
+    		if (bits.charAt(i) == '1') {
+    			num += mul;
+    		}
+    		mul = mul * 2;
 		}
     	
-    	return true;
+    	return num;
     }
     
-    private String num_to_bin(long num) {
-    	String bin = "";
+    private String num_to_bit(long num) {
+    	String bit = "";
     	
     	while(num != 0) {
-    		bin = num % 2 + bin;
+    		bit = num % 2 + bit;
     		num = num / 2;
     	}
     	
-    	return bin;
+    	return bit;
     }
+//    private boolean find_different_bits(String num, String tar) { // 다른 비트 수가 2개 이하인지 판별
+//    	
+//    	if (tar.length() > num.length()) {
+//    		for (int i = 0; i < tar.length() - num.length(); i++) {
+//				num = "0" + num;
+//			}
+//    	}
+//    	
+//    	int dif_bits = 0;
+//    	
+//    	for (int i = 0; i < tar.length(); i++) {
+//			if (tar.charAt(i) != num.charAt(i))
+//				dif_bits++;
+//			
+//			if (dif_bits > 2)
+//				return false;
+//		}
+//    	
+//    	return true;
+//    }
+    
 }
