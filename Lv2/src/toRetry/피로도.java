@@ -18,7 +18,6 @@ public class 피로도 {
 class DegreeOfFatigue {
 	
 	public int solution(int k, int[][] dungeons) {
-		int answer = -1;
 		return dfs(k, dungeons);
 	}
 	
