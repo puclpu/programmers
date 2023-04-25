@@ -1,4 +1,4 @@
-package ing;
+package done;
 
 import java.util.PriorityQueue;
 
@@ -22,6 +22,15 @@ class MoreSpicy {
 			pq.add(scoville[i]);
 		}
         
+        while(pq.peek() < K) {
+        	if (pq.size() < 2) {
+        		return -1;
+        	}
+        	
+        	int n = pq.poll() + (pq.poll() * 2);
+        	pq.add(n);
+        	answer++;
+        }
         
         return answer;
     }
