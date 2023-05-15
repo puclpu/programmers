@@ -12,7 +12,7 @@ public class No2806 {
 			int Q = N; // Queen의 갯수
 			int[][] chess = new int[N][N]; // N * N 보드
 			
-			boolean[][] visited = new boolean[N][N];
+			
 		}
 		
 		sc.close();
@@ -20,28 +20,13 @@ public class No2806 {
 	
 }
 
-class Solution {
+class Nqueen {
 	int answer = 0;
-	
-	public int solution(int[][] chess, boolean[][] visited) {
-		
-		
-		
-		return answer;
-	}
-	
-	private void dfs(int x, int y, int[][] chess, boolean[][] visited, int count) {
-		if (count == chess.length) {
+	private void dfs(int[][] chess, int q, int Q) {
+		if (q == Q) {
 			answer++;
-		} else if (x == chess.length && y == chess.length) {
-			
 		} else {
-			if (visited[x][y]) {
-				
-			} else {
-				chess[x][y] = 1;
-				
-			}
+			
 		}
 	}
 }
