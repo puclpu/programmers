@@ -8,6 +8,12 @@ public class 하노이의탑 {
 		int n = 2;
 		TowerOfHanoi toh = new TowerOfHanoi();
 		int[][] result = toh.solution(n);
+		for (int i = 0; i < result.length; i++) {
+			for (int j = 0; j < result[i].length; j++) {
+				System.out.print(result[i][j]);
+			}
+			System.out.println();
+		}
 	}
 
 }
